@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nochebuena Feast Sign-up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm family invitation, practical as a church-hall sign-up sheet
+   IDEA: a Spanish tapas bar's chalk menu crossed with a potluck clipboard
+   PICTURE: an illustrated plate for every dish, each with its own claim slot
+   COLOUR and TYPE: pimentón red bands, white, saffron accent; Young Serif + Figtree
+   LAYOUT: red title band with live tally board, then courses as card grids, extras list last */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#170d0c);--ink:light-dark(#1f1312,#f7ece6);--muted:light-dark(#6b5753,#c4ada6);
+--red:light-dark(#a3191b,#7d1514);--red-ink:#fff4ee;--saff:#f2b134;--card:light-dark(#ffffff,#221514);
+--line:light-dark(#ecdcd6,#3b2523);--tile:light-dark(#fbeee2,#2c1a18);--ok:light-dark(#2f6b2a,#9ed58f)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Figtree,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Young Serif",Georgia,serif;font-weight:400;line-height:1.05;text-wrap:balance;margin:0}
+.band{padding:clamp(28px,4vw,64px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+header{background:var(--red);color:var(--red-ink)}
+header h1{font-size:clamp(34px,6vw,52px)}
+header .lede{font-size:17px;max-width:60ch;margin:12px 0 22px;opacity:.92}
+.tally{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.tally b{font-size:22px;font-family:"Young Serif",serif;font-weight:400}
+.meter{flex:1 1 220px;height:12px;border-radius:6px;background:rgba(255,255,255,.22);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--saff);width:0;transition:width .5s}
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:8px;list-style:none;padding:0;margin:0}
+.board a{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.16);color:inherit;text-decoration:none;min-height:44px}
+.board a:hover,.board a:focus-visible{background:rgba(0,0,0,.28)}
+.board small{font-size:13px;white-space:nowrap;opacity:.85}
+.board .got small{color:var(--saff);opacity:1;font-weight:700}
+.course{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 20px}
+.course h2{font-size:clamp(30px,4vw,40px);color:var(--red)}
+:root[data-theme=dark] .course h2{color:var(--saff)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .course h2{color:var(--saff)}}
+.course span{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:20px;margin-bottom:48px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;scroll-margin-top:16px}
+.pic{background:var(--tile);aspect-ratio:3/2;display:block}
+.pic svg{width:100%;height:100%;display:block}
+.body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card h3{font-size:26px}
+.say{font-size:14px;color:var(--muted);margin-top:4px}
+.en{font-weight:700;font-size:16px}
+.card p{margin:0}
+.facts{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--muted);margin:0;padding:0;list-style:none}
+.facts li{white-space:nowrap}.facts b{color:var(--ink);font-weight:600}
+.tip{font-size:15px;border-left:3px solid var(--saff);padding-left:12px}
+.recipe{color:var(--red);font-weight:700;text-decoration-thickness:2px;text-underline-offset:3px;align-self:flex-start;padding:6px 0}
+:root[data-theme=dark] .recipe{color:var(--saff)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .recipe{color:var(--saff)}}
+.slot{margin-top:auto;border-top:1px dashed var(--line);padding-top:14px}
+.slot form{display:flex;gap:8px;flex-wrap:wrap}
+input{font:inherit;font-size:16px;min-height:44px;padding:8px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);flex:1 1 150px}
+button{font:inherit;font-weight:700;min-height:44px;padding:8px 16px;border-radius:10px;border:0;background:var(--red);color:var(--red-ink);cursor:pointer}
+button.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);font-weight:600}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--saff);outline-offset:2px}
+.taken{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.who{font-weight:700;color:var(--ok)}
+.muted{color:var(--muted);font-size:15px}
+.confirm{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.confirm .code{flex:1 1 120px;min-width:120px}
+.msg{font-size:14px;color:var(--red);margin-top:6px}
+:root[data-theme=dark] .msg{color:var(--saff)}
+.extras{background:var(--tile)}
+.mult{margin:0!important;font-size:15px;background:var(--tile);border-radius:10px;padding:10px 12px}
+.notice{background:var(--saff);color:#2a1806;border-radius:12px;padding:14px 18px;margin:0 0 22px;max-width:760px;font-size:16px}
+.notice b{display:block;font-size:17px;margin-bottom:2px}
+.flagtop{height:clamp(12px,2vw,22px);background:#aa151b}
+.champ{background:#f1bf00;color:#3a0a0b}
+.champ .wrap{display:flex;gap:clamp(18px,3vw,36px);align-items:center;flex-wrap:wrap}
+.champ svg{flex:none;width:clamp(120px,18vw,190px);height:auto;filter:drop-shadow(0 6px 10px rgba(90,40,0,.25))}
+.champ h2{font-size:clamp(30px,4.6vw,46px);color:#8f1015}
+.champ .kicker{font-weight:700;font-size:15px;margin:0 0 6px;color:#6a2a05}
+.champ p.why{margin:10px 0 0;max-width:62ch;font-size:17px}
+.champtext{flex:1 1 320px}
+@media(prefers-reduced-motion:no-preference){.champ .wave{animation:wave 3.2s ease-in-out infinite;transform-origin:14px 50%}}
+@keyframes wave{50%{transform:skewY(-2deg) scaleX(.985)}}
+.extras ul{list-style:none;padding:0;margin:18px 0;display:grid;gap:8px;max-width:760px}
+.extras li{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 8px 8px 14px}
+.extras form{display:flex;gap:8px;flex-wrap:wrap;max-width:760px}
+.extras p{max-width:65ch}
+footer{color:var(--muted);font-size:14px}
+@media(prefers-reduced-motion:reduce){.meter i{transition:none}}
+@media(max-width:600px){.card h3{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="flagtop" aria-hidden="true"></div>
+<section class="band champ" aria-labelledby="champ-title">
+  <div class="wrap">
+    <svg viewBox="0 0 200 140" role="img" aria-label="Flag of Spain">
+      <rect x="8" y="6" width="6" height="132" rx="3" fill="#6b4a2a"/>
+      <circle cx="11" cy="6" r="6" fill="#c9a227"/>
+      <g class="wave">
+        <path d="M14 12 C60 2 100 22 150 12 S190 10 196 14 V44 C190 40 170 40 150 42 C100 52 60 32 14 42Z" fill="#aa151b"/>
+        <path d="M14 42 C60 32 100 52 150 42 S190 40 196 44 V104 C190 100 170 100 150 102 C100 112 60 92 14 102Z" fill="#f1bf00" stroke="#d9a800" stroke-width=".8"/>
+        <path d="M14 102 C60 92 100 112 150 102 S190 100 196 104 V134 C190 130 170 130 150 132 C100 142 60 122 14 132Z" fill="#aa151b"/>
+        <path d="M14 12 C60 2 100 22 150 12 S190 10 196 14 V134 C190 130 170 130 150 132 C100 142 60 122 14 132Z" fill="url(#sheen)"/>
+      </g>
+      <defs><linearGradient id="sheen" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".35" stop-color="#fff" stop-opacity=".18"/><stop offset=".55" stop-color="#000" stop-opacity=".08"/><stop offset=".8" stop-color="#fff" stop-opacity=".14"/><stop offset="1" stop-color="#000" stop-opacity=".06"/></linearGradient></defs>
+    </svg>
+    <div class="champtext">
+      <p class="kicker">This year’s theme: España</p>
+      <h2 id="champ-title">¡Campeones del mundo! Celebrating the great food of Spain, 2026 World Cup winners</h2>
+      <p class="why">This year belongs to Spain, who beat Argentina 1–0 in extra time to win the World Cup final in July. ¡Buen provecho!</p>
+    </div>
+  </div>
+</section>
+<header class="band">
+  <div class="wrap">
+    <h1>Nochebuena en familia</h1>
+    <p class="lede">Our Spanish Christmas feast. Pick a dish below, type your name on it and tap “I’ll bring it”. No account or sign-in needed. Each card has the translation, what it should look like, and a link to the recipe.</p>
+    <p class="notice"><b>Please cook your dish for 14 to 18 people.</b>Most recipes serve 4 to 6, so each card says roughly how many batches to make. Your dish is one part of a big spread, so it doesn’t need a full portion for everyone. Don’t multiply everything straight across: go lighter on salt, spices and garlic and taste as you go, and keep frying oil and pan liquids (wine, stock) per pan, not per batch.</p>
+    <div class="tally"><b id="count">0 of 9 dishes taken</b><div class="meter" aria-hidden="true"><i id="bar"></i></div></div>
+    <ul class="board" id="board"></ul>
+  </div>
+</header>
+<main class="band"><div class="wrap" id="menu"></div></main>
+<section class="band extras" id="extras">
+  <div class="wrap">
+    <h2 style="font-size:clamp(30px,4vw,40px)">Also bringing</h2>
+    <p class="muted">Wine, cava, sherry, turrón, polvorones, cheese, ice, chairs. Add anything else you're bringing so we don't end up with four bottles of the same thing.</p>
+    <ul id="xlist"><li class="muted">Loading…</li></ul>
+    <form id="xform" hidden>
+      <input id="xname" autocomplete="off" placeholder="Your name" maxlength="40" required aria-label="Your name">
+      <input id="xitem" placeholder="What you're bringing" maxlength="80" required aria-label="What you're bringing">
+      <button>Add</button>
+    </form>
+    <p class="msg" id="xmsg" role="status"></p>
+  </div>
+</section>
+<footer class="band"><div class="wrap">Serving sizes and times come from each linked recipe. Batch counts assume everyone has a bit of everything. Illustrations are drawn, not photos: tap "Open the recipe" to see the real thing. No account needed: type your name on a dish and tap “I’ll bring it”.</div></footer>
+
+<script>
+{
+const C={pink:'#f08a6a',pinkL:'#ffc6b0',terra:'#b5562b',terraD:'#86381a',gold:'#e3a332',parsley:'#3f8a3a',white:'#fffaf2',rim:'#e6dccf',shadow:'rgba(60,20,10,.18)'};
+const plate=(rx=96,ry=58)=>`<ellipse cx="120" cy="88" rx="${rx}" ry="${ry}" fill="${C.shadow}"/><ellipse cx="120" cy="80" rx="${rx}" ry="${ry}" fill="${C.rim}"/><ellipse cx="120" cy="78" rx="${rx-10}" ry="${ry-8}" fill="${C.white}"/>`;
+const dots=(pts,r,fill)=>pts.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}"/>`).join('');
+const pars=pts=>dots(pts,2.4,C.parsley);
+const ART={
+croquetas:()=>plate()+[[78,66,-20],[118,56,10],[158,68,30],[92,96,15],[138,94,-15]].map(([x,y,r])=>`<g transform="rotate(${r} ${x} ${y})"><rect x="${x-22}" y="${y-12}" width="44" height="26" rx="13" fill="#9a5f22" opacity=".35" transform="translate(2 4)"/><rect x="${x-22}" y="${y-13}" width="44" height="26" rx="13" fill="#cf8c3a"/><rect x="${x-16}" y="${y-9}" width="22" height="6" rx="3" fill="#ecb468"/>${dots([[x-8,y+4],[x+6,y-2],[x+12,y+6],[x-2,y+8]],1.4,'#a86a26')}</g>`).join('')+
+ `<path d="M168 98 a16 16 0 0 1 32 0z" fill="#f6d84a" stroke="#e0b820" stroke-width="2" transform="rotate(-20 184 98)"/>`+pars([[110,80],[124,78],[146,82]]),
+pan:()=>`<rect x="26" y="34" width="176" height="104" rx="14" fill="${C.shadow}" transform="translate(4 6)"/><rect x="26" y="34" width="176" height="104" rx="14" fill="#a8743f"/><rect x="200" y="74" width="22" height="20" rx="8" fill="#a8743f"/><path d="M40 60h148M40 100h148" stroke="#93622f" stroke-width="2" opacity=".5"/>`+
+ [[44,46,-6],[96,50,4],[148,44,-3]].map(([x,y,r])=>`<g transform="rotate(${r} ${x+22} ${y+40})"><rect x="${x}" y="${y}" width="46" height="80" rx="10" fill="#e9c58a"/><rect x="${x+4}" y="${y+4}" width="38" height="72" rx="8" fill="#f3dcae"/><path d="M${x+8} ${y+16} q14 -8 28 2 q6 22 -2 46 q-14 8 -24 -2 q-6 -24 -2 -46z" fill="#d6402b" opacity=".88"/><ellipse cx="${x+18}" cy="${y+28}" rx="6" ry="3" fill="#ff8a6a" opacity=".7"/></g>`).join('')+dots([[60,80],[112,92],[162,70],[70,110],[120,66],[170,100]],1.5,'#ffffff'),
+datiles:()=>`<rect x="24" y="36" width="192" height="100" rx="10" fill="${C.shadow}" transform="translate(4 6)"/><rect x="24" y="36" width="192" height="100" rx="10" fill="#3b3a40"/>`+
+ [[62,64],[120,60],[178,66],[90,104],[150,104]].map(([x,y])=>`<g><ellipse cx="${x}" cy="${y}" rx="24" ry="14" fill="#5a2616"/><rect x="${x-13}" y="${y-15}" width="9" height="30" rx="3" fill="#c9604a"/><rect x="${x-11}" y="${y-15}" width="3" height="30" fill="#f2c2b0"/><rect x="${x+2}" y="${y-15}" width="9" height="30" rx="3" fill="#b5523c"/><rect x="${x+5}" y="${y-15}" width="3" height="30" fill="#ebb3a0"/><line x1="${x}" y1="${y-26}" x2="${x}" y2="${y-4}" stroke="#ead7b1" stroke-width="2.5" stroke-linecap="round"/></g>`).join('')+dots([[40,120],[204,52],[120,126]],2,'#f3ead8'),
+patatas:()=>`<ellipse cx="120" cy="90" rx="98" ry="60" fill="${C.shadow}"/><ellipse cx="120" cy="80" rx="98" ry="58" fill="#f2ede4"/><ellipse cx="120" cy="78" rx="86" ry="48" fill="#c8892a"/>`+
+ Array.from({length:22},(_,i)=>{const a=i*2.4,rr=6+(i%6)*9;const x=120+Math.cos(a)*rr*1.3,y=78+Math.sin(a)*rr*.6;return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="15" fill="#f5d886" stroke="#d99a34" stroke-width="3"/>`}).join('')+
+ `<path d="M80 70q10-8 20 0M140 60q10-6 18 2M110 96q10-8 22-2M160 88q8-6 16 0" fill="none" stroke="#fff4dc" stroke-width="3" stroke-linecap="round"/>`+pars([[96,66],[132,74],[152,98],[84,96],[118,58],[170,70],[104,84]]),
+salad:()=>`<ellipse cx="120" cy="90" rx="94" ry="58" fill="${C.shadow}"/><ellipse cx="120" cy="80" rx="94" ry="56" fill="#ffffff" stroke="${C.rim}" stroke-width="3"/>`+
+ [[80,70,20,'#7fb24a'],[118,58,-10,'#a9cf6a'],[156,72,30,'#5e9a3e'],[96,96,-30,'#cfe39a'],[140,96,10,'#7fb24a'],[118,80,60,'#4f8f3a'],[70,88,-50,'#a9cf6a'],[168,90,-20,'#cfe39a']].map(([x,y,r,f])=>`<ellipse cx="${x}" cy="${y}" rx="28" ry="15" fill="${f}" transform="rotate(${r} ${x} ${y})"/>`).join('')+
+ [[100,70,30],[142,82,-20]].map(([x,y,r])=>`<path d="M${x-14} ${y} a14 8 0 0 0 28 0z" fill="#f6f2cc" stroke="#7cb342" stroke-width="2" transform="rotate(${r} ${x} ${y})"/>`).join('')+
+ dots([[90,62],[130,66],[150,58],[110,92],[160,98],[78,96],[126,104],[146,72],[104,82],[168,80],[86,80],[136,90]],3.2,'#c4122f')+dots([[116,70],[154,90],[94,104],[132,58]],4.5,'#9a6233'),
+piquillo:()=>plate()+`<ellipse cx="120" cy="80" rx="64" ry="34" fill="#e0603a" opacity=".9"/>`+
+ [[86,70,-25],[122,62,0],[158,72,25],[104,98,-10],[142,98,10]].map(([x,y,r])=>`<g transform="rotate(${r} ${x} ${y})"><path d="M${x-12} ${y-16} q12 -6 24 0 q2 18 -12 36 q-14 -18 -12 -36z" fill="#c8231b"/><path d="M${x-6} ${y-12} q4 10 -1 22" stroke="#f0705a" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="${x}" cy="${y-16}" rx="12" ry="4" fill="#fff1dc"/></g>`).join('')+pars([[96,84],[132,80],[118,104],[150,86],[80,90]]),
+crema:()=>`<ellipse cx="112" cy="92" rx="70" ry="50" fill="${C.shadow}"/><ellipse cx="110" cy="82" rx="70" ry="50" fill="${C.terra}"/><ellipse cx="110" cy="80" rx="58" ry="40" fill="#b8661c"/><ellipse cx="110" cy="80" rx="52" ry="35" fill="#d4892a"/><ellipse cx="96" cy="70" rx="22" ry="10" fill="#e9b04a" opacity=".7"/>`+
+ `<path d="M76 84l18-10 10 12 16-16 14 8M86 98l14-6 8 6M124 92l12 6" fill="none" stroke="#7a3d0e" stroke-width="2" stroke-linecap="round"/>`+
+ `<g transform="rotate(-25 190 104)"><rect x="160" y="98" width="62" height="12" rx="6" fill="#8b4a22"/><rect x="160" y="100" width="62" height="3" fill="#b06a38"/></g><path d="M176 52 q18 -8 26 6 q-14 0 -18 8" fill="none" stroke="#f39c2b" stroke-width="6" stroke-linecap="round"/>`,
+lamb:()=>`<rect x="18" y="30" width="204" height="112" rx="16" fill="${C.shadow}" transform="translate(4 6)"/><rect x="18" y="30" width="204" height="112" rx="16" fill="#8a8f96"/><rect x="26" y="38" width="188" height="96" rx="12" fill="#5b4330"/>`+
+ dots([[44,56],[52,116],[196,56],[200,114],[60,86],[186,88],[110,122],[150,52]],9,'#e3b45c')+dots([[44,56],[52,116],[196,56],[200,114]],4,'#f4d58c')+
+ `<g transform="rotate(-12 120 84)"><ellipse cx="108" cy="86" rx="58" ry="34" fill="#7a3b1c"/><ellipse cx="102" cy="80" rx="46" ry="24" fill="#9c5228"/><ellipse cx="92" cy="74" rx="22" ry="8" fill="#c27a44" opacity=".8"/><path d="M160 80 q18 -4 26 4" stroke="#7a3b1c" stroke-width="14" stroke-linecap="round" fill="none"/><rect x="180" y="74" width="22" height="10" rx="5" fill="#f3ead8"/><circle cx="203" cy="76" r="6" fill="#f3ead8"/><circle cx="203" cy="84" r="6" fill="#f3ead8"/>${dots([[86,84],[110,92],[124,76],[98,70],[134,90]],2.6,'#fff1d6')}</g>`+
+ [[60,72,-30],[176,104,20],[140,118,-10]].map(([x,y,r])=>`<g transform="rotate(${r} ${x} ${y})"><line x1="${x-14}" y1="${y}" x2="${x+14}" y2="${y}" stroke="#5a4a2a" stroke-width="1.5"/>${Array.from({length:6},(_,i)=>`<ellipse cx="${x-12+i*5}" cy="${y-3}" rx="3" ry="1.4" fill="#3f7a3a" transform="rotate(-35 ${x-12+i*5} ${y-3})"/><ellipse cx="${x-12+i*5}" cy="${y+3}" rx="3" ry="1.4" fill="#3f7a3a" transform="rotate(35 ${x-12+i*5} ${y+3})"/>`).join('')}</g>`).join(''),
+besugo:()=>`<ellipse cx="120" cy="90" rx="100" ry="58" fill="${C.shadow}"/><ellipse cx="120" cy="80" rx="100" ry="56" fill="#f2ede4"/><ellipse cx="120" cy="78" rx="88" ry="46" fill="#d9a441"/>`+
+ Array.from({length:16},(_,i)=>{const a=i*2.4,rr=8+(i%5)*11;return `<circle cx="${(120+Math.cos(a)*rr*1.3).toFixed(1)}" cy="${(78+Math.sin(a)*rr*.62).toFixed(1)}" r="13" fill="#f5d886" stroke="#d99a34" stroke-width="2.5"/>`}).join('')+
+ `<g><path d="M44 78 q40 -34 116 -8 q-76 30 -116 8z" fill="#c9cfd4"/><path d="M44 78 q40 -34 116 -8 q-60 -4 -116 8z" fill="#9aa6b0"/><path d="M160 70 l30 -18 l-6 26 l6 26 l-30 -18z" fill="#aab4bc"/><circle cx="60" cy="74" r="4" fill="#2b2b2b"/><circle cx="59" cy="73" r="1.3" fill="#fff"/><path d="M52 82 q6 2 12 0" stroke="#7d8790" stroke-width="1.5" fill="none"/>${[84,104,124,142].map(x=>`<path d="M${x} 64 q4 8 0 18" stroke="#6f7a84" stroke-width="2" fill="none"/><circle cx="${x+2}" cy="72" r="6" fill="#f6e27a" stroke="#e7c43a" stroke-width="1.5"/>`).join('')}</g>`+
+ pars([[70,96],[100,100],[132,98],[160,92],[90,60],[150,60],[178,84],[56,92]])+dots([[116,104],[146,104],[82,104]],2.2,'#c0261f'),
+roscon:()=>`<ellipse cx="120" cy="88" rx="96" ry="56" fill="${C.shadow}"/><ellipse cx="120" cy="80" rx="80" ry="50" fill="none" stroke="#c77b2c" stroke-width="40"/><ellipse cx="120" cy="76" rx="80" ry="48" fill="none" stroke="#dc9a4c" stroke-width="12"/>`+
+ Array.from({length:14},(_,i)=>{const a=i/14*Math.PI*2,x=120+Math.cos(a)*80,y=78+Math.sin(a)*50,f=['#d8262e','#3a9a3a','#f39a1c','#f6d84a'][i%4];return `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="9" ry="5" fill="${f}" transform="rotate(${(a*57).toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})"/>`}).join('')+
+ Array.from({length:24},(_,i)=>{const a=i/24*Math.PI*2+.13,x=120+Math.cos(a)*(70+(i%3)*9),y=78+Math.sin(a)*(42+(i%3)*6);return `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="4" height="3" rx="1" fill="#fff8e8"/>`}).join('')
+};
+const COURSES=[['apps','Tapas','Standing up, as people arrive'],['first','Primer plato','First course, at the table'],['mains','Asados','The roasts'],['dessert','Postres','Desserts']];
+const D=[
+{id:'croquetas',c:'apps',es:'Croquetas de Jamón',say:'kroh-KEH-tahs deh hah-MOHN',en:'Ham croquettes',desc:'Creamy béchamel with Spanish ham, rolled, breaded and fried until crisp outside and molten inside. The most-loved tapa in Spain.',serves:'see recipe',time:'needs a chill',tip:'The filling has to chill for hours, so start the day before. Breaded croquetas freeze well; fry them at the house or reheat in a hot oven.',url:'https://www.seriouseats.com/croquetas-de-jamon-recipe-11680423'},
+{id:'pan',c:'apps',es:'Pan con Tomate',say:'pahn kohn toh-MAH-teh',en:'Tomato bread',desc:'Toasted bread rubbed with garlic and ripe grated tomato, finished with olive oil and salt. Catalans call it pa amb tomàquet.',serves:'about 5 (10 slices)',time:'10 min',tip:'Assemble at the house. It goes soggy if it sits. A plate of serrano ham or Manchego next to it is a bonus.',url:'https://www.themediterraneandish.com/pan-con-tomate/'},
+{id:'datiles',c:'apps',es:'Dátiles Rellenos',say:'DAH-tee-lehs reh-YEH-nohs',en:'Stuffed dates',desc:'Dates stuffed with goat cheese (and a Marcona almond if you like), wrapped in bacon and baked until crisp.',serves:'12 pieces',time:'15 to 20 min bake',tip:'Stuff and wrap them the day before, then bake at the house. Soak the toothpicks so they don’t scorch.',url:'https://spanishsabores.com/bacon-wrapped-dates-recipe/#recipe'},
+{id:'salad',c:'first',es:'Ensalada de Escarola y Granada',say:'en-sah-LAH-dah deh es-kah-ROH-lah ee grah-NAH-dah',en:'Escarole and pomegranate salad',desc:'Escarole and butter lettuce with apple, pomegranate seeds and toasted hazelnuts in a bright citrus vinaigrette.',serves:'8',time:'about 20 min',tip:'Pack the greens, dressing, nuts and pomegranate separately. Slice the apple and toss everything just before we eat.',url:'https://www.bonappetit.com/recipe/escarole-and-butter-lettuce-salad-with-pomegranate-seeds-and-hazelnuts'},
+{id:'piquillo',c:'first',es:'Pimientos del Piquillo Rellenos',say:'pee-MYEN-tohs del pee-KEE-yoh reh-YEH-nohs',en:'Stuffed piquillo peppers',desc:'Sweet roasted piquillo peppers filled with a creamy cod and shrimp filling, baked in a smooth red pepper sauce.',serves:'4',time:'1 hr 15 min',tip:'Make it up to a day ahead and reheat gently in the sauce.',url:'https://flavorelense.com/recipe/spanish-pimientos-del-piquillo-rellenos-recipe/'},
+{id:'lamb',c:'mains',es:'Cordero Asado',say:'kor-DEH-roh ah-SAH-doh',en:'Roast leg of lamb',desc:'A leg of lamb marinated overnight in olive oil, white wine, lemon, garlic and herbs, then slow-roasted with potatoes and onions. The classic Castilian Christmas roast.',serves:'a 4 lb leg feeds about 6',time:'overnight + about 4¾ hr',tip:'Marinate it at home the night before and bring it in the pan. It goes in the oven at the house first, then rests under foil for 20 minutes while the fish bakes.',url:'https://spanishsabores.com/spanish-christmas-lamb-recipe-slow-roasted-lamb-with-potatoes-and-onions-cordero-con-patatas-y-cebolla/'},
+{id:'besugo',c:'mains',es:'Besugo al Horno',say:'beh-SOO-goh ahl OR-noh',en:'Baked sea bream',desc:'Whole sea bream baked on sliced potatoes with garlic, parsley, olive oil and white wine. The traditional Basque Christmas Eve fish.',serves:'2 fish feed 4',time:'about 35 min',tip:'Buy the fish cleaned and scaled (one 1 lb fish per 2 people) and bring everything ready to go. It bakes at the house in the 25 minutes the lamb is resting.',url:'https://www.bascofinefoods.com/spanish-recipes/basque-baked-sea-bream-recipe/'},
+{id:'patatas',c:'mains',es:'Patatas Panaderas',say:'pah-TAH-tahs pah-nah-DEH-rahs',en:'Baker’s potatoes',desc:'Thin-sliced potatoes and onion slow-baked in olive oil, garlic and white wine until soft and just golden at the edges.',serves:'6',time:'about 1½ hr',tip:'Make a double batch: half goes with the lamb, half becomes the bed the sea bream bakes on. Bake ahead, bring it in the dish, and it finishes in the oven at the house.',url:'https://www.foodandwine.com/patatas-panaderas-oven-roasted-spanish-potatoes-11789306'},
+{id:'crema',c:'dessert',es:'Crema Catalana',say:'KREH-mah kah-tah-LAH-nah',en:'Catalan cream',desc:'Custard flavoured with lemon, orange peel and cinnamon under a crackly burnt-sugar top. Spain’s answer to crème brûlée.',serves:'6 ramekins',time:'4 hr+ to chill',tip:'Make it 1 to 3 days ahead. Bring a kitchen torch and the sugar, and burn the tops right before serving.',url:'https://spanishsabores.com/homemade-spanish-crema-catalana-recipe/#recipe'},
+{id:'roscon',c:'dessert',es:'Roscón de Reyes',say:'rohs-KOHN deh REH-yehs',en:'Kings’ ring cake',desc:'A soft orange-and-brandy sweet bread ring topped with candied fruit and sugar, often split and filled with whipped cream.',serves:'a crowd',time:'about 4 hr (two rises)',tip:'Bake it the day before; add any cream filling only before serving. Hide a bean and a little figurine inside: the figurine finder is crowned, the bean finder buys next year’s.',url:'https://spanishsabores.com/roscon-de-reyes-recipe/#recipe'}
+];
+const SCALE={
+croquetas:'Make 2 batches (about 50 croquetas, 3 each)',
+pan:'Make 3 batches (about 30 slices)',
+datiles:'Make 4 batches (48 pieces, about 3 each)',
+salad:'Make 2 batches; 1½ times the dressing is plenty',
+piquillo:'Make 3 batches (36 peppers, 2 each)',
+lamb:'Two 4 lb legs in two pans (same roasting time as one)',
+besugo:'5 whole fish of about 1 lb each',
+patatas:'Make 2 batches, in two baking dishes',
+crema:'Make 3 batches (18 ramekins), cooked in two pots',
+roscon:'Two rings, made as two separate doughs'
+};
+const scaleHTML=id=>SCALE[id]?`<p class="mult"><b>For 14 to 18:</b> ${esc(SCALE[id])}</p>`:'';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Paste your Google Apps Script web app URL here (it ends in /exec). See SETUP.md.
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwZrmyFHB2vxiExPdjW9UP8z1wufxtMXM6L3fAKlJ3KHQl6AEI0Fkt4cWL8yl2FjPwF/exec';
+let claims={},extras=[],status='loading',confirmId=null,needCode=false;
+const msgs={};
+const live=()=>status==='live';
+const $=id=>document.getElementById(id);
+
+$('menu').innerHTML=COURSES.map(([k,es,en])=>`<div class="course"><h2>${es}</h2><span>${en}</span></div><div class="grid">${D.filter(d=>d.c===k).map(d=>`
+<article class="card" id="${d.id}">
+ <div class="pic" role="img" aria-label="Illustration of ${esc(d.en)}"><svg viewBox="0 0 240 160" preserveAspectRatio="xMidYMid meet">${ART[d.id]()}</svg></div>
+ <div class="body">
+  <div><h3>${esc(d.es)}</h3><div class="say">${esc(d.say)}</div></div>
+  <div class="en">${esc(d.en)}</div>
+  <p>${esc(d.desc)}</p>
+  <ul class="facts"><li>Serves <b>${esc(d.serves)}</b></li><li>Time <b>${esc(d.time)}</b></li></ul>
+  <p class="tip">${esc(d.tip)}</p>
+  ${scaleHTML(d.id)}
+  <a class="recipe" href="${d.url}" target="_blank" rel="noopener">Open the recipe →</a>
+  <div class="slot" id="slot-${d.id}"></div>
+ </div>
+</article>`).join('')}</div>`).join('');
+
+function apply(d){if(!d)return;claims={};for(const[k,v]of Object.entries(d.claims||{}))if(v)claims[k]={name:String(v)};extras=Array.isArray(d.extras)?d.extras:[];needCode=!!d.needCode}
+async function api(body){
+  const r=await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  const d=await r.json();apply(d);status='live';return d;
+}
+async function load(){
+  if(!/^https?:\/\//.test(SCRIPT_URL)){status='off';render();return}
+  try{const r=await fetch(SCRIPT_URL+(SCRIPT_URL.includes('?')?'&':'?')+'t='+Date.now());if(!r.ok)throw 0;apply(await r.json());status='live'}
+  catch(e){if(status!=='live')status='off'}
+  render();
+}
+const codeBox=k=>needCode?`<input class="code" id="code-${k}" autocomplete="off" placeholder="Code word" aria-label="Code word">`:'';
+function slotHTML(d){
+  const c=claims[d.id],m=msgs[d.id]?`<p class="msg" role="status">${esc(msgs[d.id])}</p>`:'';
+  if(status==='loading')return `<p class="muted">Loading sign-ups…</p>`;
+  if(status==='off'&&!c)return `<p class="muted">Sign-ups can’t load right now. Text Tim your pick.</p>`;
+  if(c){
+    const btns=live()?(confirmId===d.id?`<span class="confirm">${codeBox(d.id)}<button data-release="${d.id}">Yes, free it up</button> <button class="ghost" data-cancel>Keep</button></span>`:`<button class="ghost" data-ask="${d.id}">Change</button>`):'';
+    return `<div class="taken"><span><span class="who">${esc(c.name)}</span> is bringing this</span>${btns}</div>${m}`;
+  }
+  if(!live())return `<p class="muted">Still open. Text Tim if you want it.</p>${m}`;
+  return `<form data-claim="${d.id}"><input name="n" autocomplete="off" placeholder="Your name" maxlength="40" required aria-label="Your name for ${esc(d.en)}"><button>I’ll bring it</button></form>${m}`;
+}
+function render(){
+  for(const d of D){const el=$('slot-'+d.id);const f=el.querySelector('input');if(f&&document.activeElement===f&&!claims[d.id]&&!msgs[d.id])continue;el.innerHTML=slotHTML(d)}
+  const n=D.filter(d=>claims[d.id]).length;
+  $('count').textContent=`${n} of ${D.length} dishes taken`;$('bar').style.width=(n/D.length*100)+'%';
+  $('board').innerHTML=D.map(d=>{const c=claims[d.id];return `<li><a href="#${d.id}" class="${c?'got':''}"><span>${esc(d.es)}</span><small>${c?esc(c.name):'open'}</small></a></li>`}).join('');
+  renderExtras();
+}
+function renderExtras(){
+  const L=$('xlist');
+  if(status==='loading'){L.innerHTML='<li class="muted">Loading…</li>';return}
+  if(!extras.length){L.innerHTML='<li class="muted">Nothing added yet.</li>'}
+  else L.innerHTML=extras.map(x=>`<li><span><b>${esc(x.name)}</b> · ${esc(x.item)}</span>${live()?(confirmId==='x'+x.id?`<span class="confirm">${codeBox('x'+esc(x.id))}<button data-xdel="${esc(x.id)}">Remove</button> <button class="ghost" data-cancel>Keep</button></span>`:`<button class="ghost" data-ask="x${esc(x.id)}" aria-label="Remove ${esc(x.item)}">✕</button>`):''}</li>`).join('');
+  $('xform').hidden=!live();
+}
+function setMsg(key,t){if(key==='x')$('xmsg').textContent=t;else msgs[key]=t;render()}
+function fail(key,d){
+  if(d&&d.error==='taken')setMsg(key,`${d.by||'Someone'} just took this one.`);
+  else if(d&&d.error==='code')setMsg(key,'That code word isn’t right. Ask Tim for it.');
+  else setMsg(key,'That didn’t save. Check your connection and try again, or text Tim.');
+}
+async function send(key,body){
+  try{const d=await api(body);if(d.ok===false){fail(key,d);return false}if(key==='x')$('xmsg').textContent='';else delete msgs[key];render();return true}
+  catch(e){fail(key);return false}
+}
+document.addEventListener('submit',async ev=>{
+  const f=ev.target;ev.preventDefault();if(!live())return;
+  if(f.dataset.claim){const n=f.n.value.trim().slice(0,40);if(!n)return;const b=f.querySelector('button');b.disabled=true;b.textContent='Saving…';await send(f.dataset.claim,{action:'claim',dish:f.dataset.claim,name:n});b.disabled=false;b.textContent='I’ll bring it'}
+  else if(f.id==='xform'){
+    const name=$('xname').value.trim().slice(0,40),item=$('xitem').value.trim().slice(0,80);if(!name||!item)return;
+    const b=f.querySelector('button');b.disabled=true;
+    if(await send('x',{action:'addExtra',name,item})){$('xname').value='';$('xitem').value=''}
+    b.disabled=false;
+  }
+});
+document.addEventListener('click',async ev=>{
+  const b=ev.target.closest('button');if(!b)return;
+  if(b.dataset.ask){confirmId=b.dataset.ask;render();const c=document.getElementById('code-'+confirmId);if(c)c.focus()}
+  else if('cancel' in b.dataset){confirmId=null;render()}
+  else if(b.dataset.release){const id=b.dataset.release,code=(document.getElementById('code-'+id)||{}).value||'';b.disabled=true;if(await send(id,{action:'release',dish:id,code}))confirmId=null;render()}
+  else if(b.dataset.xdel){const id=b.dataset.xdel,code=(document.getElementById('code-x'+id)||{}).value||'';b.disabled=true;if(await send('x',{action:'removeExtra',id,code}))confirmId=null;render()}
+});
+render();
+load();
+setInterval(()=>{const a=document.activeElement;if(!(a&&a.tagName==='INPUT')&&!confirmId)load()},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!confirmId)load()});
+}
+</script>
+</body>
+</html>
